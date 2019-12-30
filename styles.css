@@ -16,3 +16,25 @@
 #sendrec{
   /* margin: 20px; */
 }
+
+
+#right{
+  color: darkcyan;
+  padding-left: 25vw;
+}
+
+#left{
+  color: lightseagreen;
+}
+
+#live_mssg{
+  width: 35vw;
+}
+
+.mssg{
+  background-color: orange;
+}
+
+ul{
+  list-style-type: none;
+}

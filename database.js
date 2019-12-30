@@ -18,6 +18,16 @@ receiver = "undefined";
     .ref()
     .child("Root");
 
+function formatted(obj){
+  type = "";
+  if(obj.sender == UserId){
+    type = "right";
+  }else{
+    type = "left";
+  }
+  return `<h5 id=${type}>${obj.message}</h3>`
+}
+
 function live_inbox_feed(snap) {
       list = snap.val();
       const ul = document.getElementById("live_inbox");
@@ -25,7 +35,7 @@ function live_inbox_feed(snap) {
       for (i = Math.max(1, list.length-12); i < list.length; i++) {
         var li = document.createElement("li");
         if(list[i].receiver == receiver || list[i].sender == receiver){
-          li.innerText = JSON.stringify(list[i]);
+          li.innerHTML = formatted(list[i]);//JSON.stringify(list[i]);
           ul.appendChild(li);
         }
       }
