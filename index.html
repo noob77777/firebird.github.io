@@ -44,37 +44,85 @@
   </head>
   <body>
     <div id="loginmenu">
-      <h1>Login</h1>
-      <form>
-        UserId: <br />
-        <input type="text" id="user" /><br />
-        <input type="button" value="Login" id="submit_button" /><br />
-      </form>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+              <div class="card-body">
+                <h1 class="card-title text-center">FireBird</h1>
+                <h6 class="text-center">Fast. Secure. Clean.</h6>
+                <br />
+                <form class="form-signin">
+                  <div class="form-label-group">
+                    <input
+                      type="text"
+                      id="inputEmail"
+                      class="form-control"
+                      placeholder="@userId"
+                      required
+                      autofocus
+                    />
+                    <label for="inputEmail">Username</label>
+                  </div>
+
+                  <div class="form-label-group">
+                    <input
+                      type="password"
+                      id="inputPassword"
+                      class="form-control"
+                      placeholder="Password"
+                      required
+                    />
+                    <label for="inputPassword">Password</label>
+                  </div>
+
+                  <div class="custom-control custom-checkbox mb-3">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="customCheck1"
+                    />
+                    <label class="custom-control-label" for="customCheck1"
+                      >Remember password</label
+                    >
+                  </div>
+                  <button
+                    class="btn btn-lg btn-primary btn-block text-uppercase"
+                    type="button"
+                    id="submit-button"
+                  >
+                    Sign in
+                  </button>
+
+                  <br />
+                  <p class="text-center text-danger" id="AuthFail"></p>
+
+                  <hr class="my-4" />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div id="interface">
-
       <div id="sendrec">
         <div class="container-fluid">
           <div class="row">
             <div class="col-6">
               <h4>Sender : <span id="sender"></span></h4>
             </div>
-              <div class="col-6">
-              
-                <h4>Receiver : <span id="receiver" ></span></h4>
-              </div>
+            <div class="col-6">
+              <h4>Receiver : <span id="receiver"></span></h4>
+            </div>
           </div>
-
         </div>
       </div>
 
-
       <div class="container-fluid">
         <div class="row">
-          <div id="chatbox" class="col-6">
-            
-
+          <div id="Contact-panel" class="col-4">
             <h1>Contacts</h1>
 
             Receivers ID:
@@ -84,13 +132,15 @@
             <ul id="contacts"></ul>
           </div>
 
-          <div id="inbox" class="col-6 bg-light">
+          <div id="inbox" class="col-8 bg-light">
             <h1>Inbox</h1>
-            <ul id="live_inbox"></ul>
-            Message <br />
-            <input type="text" id="live_mssg" />
+            <ul id="live-inbox"></ul>
 
-            <input type="button" value="Send" id="send_mssg" />
+            <div id="sending-utility">
+              Message <br />
+              <input type="text" id="live-mssg" />
+              <input type="button" value="Send" id="send-mssg" />
+            </div>
           </div>
         </div>
       </div>

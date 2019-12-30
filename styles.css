@@ -9,32 +9,42 @@
 }
 
 #header {
-	/* margin-left: 20px; */
-	/* margin: 20px; */
-}
-
-#sendrec{
+  /* margin-left: 20px; */
   /* margin: 20px; */
 }
 
+#sendrec {
+  /* margin: 20px; */
+}
 
-#right{
+#right {
   color: darkcyan;
   padding-left: 25vw;
 }
 
-#left{
+#left {
   color: lightseagreen;
+  padding-left: 5vw;
 }
 
-#live_mssg{
+#live_mssg {
   width: 35vw;
 }
 
-.mssg{
-  background-color: orange;
+ul {
+  list-style-type: none;
+  padding-left: 0px;
 }
 
-ul{
-  list-style-type: none;
+.input-btn {
+  border-radius: 5px;
+  background-color: ;
+  border: 1px solid black;
+  padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.css-sm {
+  font-size: small;
 }
