@@ -1,7 +1,18 @@
 #loginmenu {
   /* border: 1px black solid; */
+  margin: 30px;
+  margin-top: 10px;
 }
 
 #interface {
   visibility: hidden;
+}
+
+#header {
+	/* margin-left: 20px; */
+	/* margin: 20px; */
+}
+
+#sendrec{
+  /* margin: 20px; */
 }

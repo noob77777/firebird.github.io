@@ -53,29 +53,44 @@
     </div>
 
     <div id="interface">
-      <div>
-        Receivers ID:
-        <br />
-        <input type="text" id="newid" />
-        <button id="newuser">Create New</button>
-        <ul id="list"></ul>
+
+      <div id="sendrec">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-6">
+              <h4>Sender : <span id="sender"></span></h4>
+            </div>
+              <div class="col-6">
+              
+                <h4>Receiver : <span id="receiver" ></span></h4>
+              </div>
+          </div>
+
+        </div>
       </div>
+
 
       <div class="container-fluid">
         <div class="row">
           <div id="chatbox" class="col-6">
-            <h4>Sender : <span id="sender"></span></h4>
-            <h4>Receiver : <span id="receiver"></span></h4>
+            
 
-            Message <br />
-            <input type="text" id="live_mssg" />
+            <h1>Contacts</h1>
 
-            <input type="button" value="Send" id="send_mssg" />
+            Receivers ID:
+            <br />
+            <input type="text" id="newid" />
+            <button id="newuser">Create New</button>
+            <ul id="contacts"></ul>
           </div>
 
           <div id="inbox" class="col-6">
             <h1>Inbox</h1>
             <ul id="live_inbox"></ul>
+            Message <br />
+            <input type="text" id="live_mssg" />
+
+            <input type="button" value="Send" id="send_mssg" />
           </div>
         </div>
       </div>
