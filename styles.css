@@ -48,3 +48,8 @@ ul {
 .css-sm {
   font-size: small;
 }
+
+#newuser {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}

@@ -24,28 +24,71 @@ const dbRef = firebase
 //
 //
 
-function formatted(obj) {
+function clean(list) {
+  var set = new Set();
+  set.add(undefined);
+  set.add("");
+  var newlist = [];
+  for (i = 0; i < list.length; i++) {
+    if (!set.has(list[i])) {
+      set.add(list[i]);
+      newlist.push(list[i]);
+    }
+  }
+  return newlist;
+}
+
+function formatted(obj, flag) {
   type = "";
   if (obj.sender == UserId) {
     type = "right";
   } else {
     type = "left";
   }
-  return `<h5 id=${type}>${obj.message} <span class="text-secondary css-sm">~${obj.sender}</span></h5>`;
+  if (flag) {
+    return `<h6 id=${type}>${obj.message} <span class="text-danger css-sm">~${obj.sender}</span></h6>`;
+  }
+  return `<h6 id=${type}>${obj.message} <span class="text-secondary css-sm">~${obj.sender}</span></h6>`;
 }
 
 function live_inbox_feed(snap) {
   list = snap.val();
   const ul = document.getElementById("live-inbox");
   ul.innerHTML = "";
-  for (i = Math.max(1, list.length - 12); i < list.length; i++) {
+
+  var counter = 0;
+  var idx = 1;
+  for (i = list.length - 1; i > 0; i--) {
+    if (
+      list[i].receiver == receiver ||
+      list[i].sender == receiver ||
+      receiver == "undefined"
+    ) {
+      counter++;
+      if (counter == 8) {
+        idx = i;
+        break;
+      }
+    }
+  }
+
+  for (i = idx; i < list.length; i++) {
     var li = document.createElement("li");
     if (
       list[i].receiver == receiver ||
       list[i].sender == receiver ||
       receiver == "undefined"
     ) {
-      li.innerHTML = formatted(list[i]); //JSON.stringify(list[i]);
+      flag = 0;
+      if (receiver == "undefined") {
+        flag = 1;
+      }
+
+      if (receiver == "undefined" && list[i].sender == UserId) {
+        continue;
+      }
+
+      li.innerHTML = formatted(list[i], flag); //JSON.stringify(list[i]);
       ul.appendChild(li);
     }
   }
@@ -68,10 +111,13 @@ function selectChat() {
 
 function update_contacts(list) {
   const node = document.getElementById("contacts");
+  list = clean(list);
+
   node.innerHTML = "";
   for (i = 1; i < list.length; i++) {
     var li = document.createElement("li");
     var btn = document.createElement("button");
+    btn.classList.add("btn", "btn-outline-info");
     btn.onclick = selectChat;
     btn.innerHTML = list[i];
     li.appendChild(btn);
@@ -93,6 +139,7 @@ function update_contacts(list) {
   //
   // LOGIN
   // BAD CODE DO NOT TOUCH
+  //
   //
   function login() {
     UserId = input.value;
@@ -177,6 +224,9 @@ function update_contacts(list) {
   function createNewChat() {
     var li = document.createElement("li");
     var temp = document.createElement("button");
+
+    temp.classList.add("btn", "btn-outline-info");
+
     temp.onclick = selectChat;
     temp.innerHTML = inputNewUser.value;
     li.appendChild(temp);

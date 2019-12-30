@@ -127,19 +127,31 @@
 
             Receivers ID:
             <br />
-            <input type="text" id="newid" />
-            <button id="newuser">Create New</button>
+            <input type="text" class="form-control" id="newid" />
+            <button id="newuser" class="btn-info btn">Create New</button>
             <ul id="contacts"></ul>
           </div>
 
           <div id="inbox" class="col-8 bg-light">
             <h1>Inbox</h1>
+            <br />
             <ul id="live-inbox"></ul>
 
             <div id="sending-utility">
               Message <br />
-              <input type="text" id="live-mssg" />
-              <input type="button" value="Send" id="send-mssg" />
+              <div class="row">
+                <div class="col-8">
+                  <input type="text" class="form-control" id="live-mssg" />
+                </div>
+                <div>
+                  <input
+                    type="button"
+                    value="Send"
+                    class="btn-info btn"
+                    id="send-mssg"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
