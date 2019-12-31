@@ -24,6 +24,21 @@ const dbRef = firebase
 //
 //
 
+function hash(str) {
+  var res = 0,
+    i,
+    chr;
+  if (str.length === 0) return res;
+  for (i = 0; i < str.length; i++) {
+    chr = str.charCodeAt(i);
+    res = (res << 5) - res + chr;
+    res |= 0; // Convert to 32bit integer
+  }
+  return res;
+}
+
+// console.log(hash("pass"));
+
 function clean(list) {
   var set = new Set();
   set.add(undefined);
@@ -151,14 +166,10 @@ function update_contacts(list) {
       flag = false;
       // console.log();
       if (snap.exists()) {
-        if (snap.val().password == password) {
+        if (snap.val().password == hash(password)) {
           flag = true;
         }
-      } else {
-        flag = true;
       }
-
-      // console.log(flag);
 
       //
       // IF LOGIN
@@ -176,7 +187,7 @@ function update_contacts(list) {
             dbRef.child(UserId).set({
               inbox: INBOX,
               contacts: CONTACTS,
-              password: password
+              password: hash(password)
             });
           }
           if (flag) {
@@ -213,7 +224,90 @@ function update_contacts(list) {
     }
     dbRef.child(UserId).once("value", local_reader);
   }
-  btn.onclick = login;
+  try {
+    btn.onclick = login;
+  } catch {}
+  // console.log("here");
+
+  //
+  //
+  // SIGNUP
+  //
+  //
+
+  const signupbtn = document.getElementById("signup-button");
+
+  function signup() {
+    const UserId = document.getElementById("signup-inputID").value;
+    var email = document.getElementById("signup-inputEmail").value;
+    const password = document.getElementById("signup-inputPassword").value;
+    const cpass = document.getElementById("inputPasswordConfirm").value;
+
+    if (UserId == "" || email == "" || password == "") {
+      const node = document.getElementById("signup-fail");
+      node.innerHTML = "Blank fields not accepted.";
+      return;
+    }
+
+    Z = email.split(".");
+    email = "";
+    for (i = 0; i < Z.length; i++) {
+      email += Z[i];
+      email += "|";
+    }
+
+    // console.log(email);
+
+    function local_reader(snap) {
+      if (snap.exists()) {
+        const node = document.getElementById("signup-fail");
+        node.innerHTML = "Username already exists.";
+      } else {
+        function local_reader2(snap) {
+          if (snap.exists()) {
+            const node = document.getElementById("signup-fail");
+            node.innerHTML =
+              "Email already taken.<br>Contact Database admin if issue persists.";
+          } else {
+            if (password != cpass || password == "") {
+              const node = document.getElementById("signup-fail");
+              node.innerHTML = "Passwords do not match.";
+              return;
+            }
+
+            const checkbox = document.getElementById("customCheck2").checked;
+            if (!checkbox) {
+              const node = document.getElementById("signup-fail");
+              node.innerHTML =
+                "Accepting terms & conditions is mandatory.<br>Read storage policies below.";
+              return;
+            }
+
+            dbRef.child(UserId).set({
+              inbox: INBOX,
+              contacts: CONTACTS,
+              password: hash(password)
+            });
+            dbRef
+              .child("EmailDataBase")
+              .child(email)
+              .set(UserId);
+
+            window.open("index.html", "_self");
+          }
+        }
+        dbRef
+          .child("EmailDataBase")
+          .child(email)
+          .once("value", local_reader2);
+      }
+    }
+
+    dbRef.child(UserId).once("value", local_reader);
+  }
+  try {
+    signupbtn.onclick = signup;
+  } catch {}
 
   //
   //
@@ -247,8 +341,9 @@ function update_contacts(list) {
       .child("contacts")
       .once("value", local_reader);
   }
-  newIdBtn.onclick = createNewChat;
-
+  try {
+    newIdBtn.onclick = createNewChat;
+  } catch {}
   //
   //
   // THE SEND BUTTON
@@ -308,5 +403,7 @@ function update_contacts(list) {
     dbRef.child(receiver).once("value", local_reader);
     document.getElementById("live-mssg").value = "";
   }
-  SEND.onclick = sendMessage;
+  try {
+    SEND.onclick = sendMessage;
+  } catch {}
 })();
