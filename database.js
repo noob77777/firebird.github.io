@@ -117,7 +117,7 @@ function update_contacts(list) {
   for (i = 1; i < list.length; i++) {
     var li = document.createElement("li");
     var btn = document.createElement("button");
-    btn.classList.add("btn", "btn-outline-info");
+    btn.classList.add("btn", "btn-outline-info", "contact-width");
     btn.onclick = selectChat;
     btn.innerHTML = list[i];
     li.appendChild(btn);
@@ -165,7 +165,8 @@ function update_contacts(list) {
       //
       if (flag) {
         const node = document.getElementById("loginmenu");
-        node.innerHTML = "<h1 id='header'>Welcome to FireBird.</h1>";
+        node.innerHTML =
+          "<h1 id='header' class='text-info'>Welcome to FireBird.</h1>";
         SendTag.innerHTML = UserId;
         RTag.innerHTML = receiver;
 
@@ -225,7 +226,7 @@ function update_contacts(list) {
     var li = document.createElement("li");
     var temp = document.createElement("button");
 
-    temp.classList.add("btn", "btn-outline-info");
+    temp.classList.add("btn", "btn-outline-info", "contact-width");
 
     temp.onclick = selectChat;
     temp.innerHTML = inputNewUser.value;

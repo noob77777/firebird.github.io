@@ -1,7 +1,7 @@
 #loginmenu {
   /* border: 1px black solid; */
-  margin: 30px;
-  margin-top: 10px;
+  margin: 0px;
+  height: 15vh;
 }
 
 #interface {
@@ -11,10 +11,9 @@
 #header {
   /* margin-left: 20px; */
   /* margin: 20px; */
-}
-
-#sendrec {
-  /* margin: 20px; */
+  height: 15vh;
+  /* border: 1px solid; */
+  padding: 15px;
 }
 
 #right {
@@ -36,15 +35,6 @@ ul {
   padding-left: 0px;
 }
 
-.input-btn {
-  border-radius: 5px;
-  background-color: ;
-  border: 1px solid black;
-  padding: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
 .css-sm {
   font-size: small;
 }
@@ -52,4 +42,24 @@ ul {
 #newuser {
   margin-bottom: 10px;
   margin-top: 10px;
+}
+
+#sendrec {
+  /* border: 1px solid black; */
+  height: 10vh;
+  margin-top: 0px;
+}
+
+.vh-75 {
+  height: 75vh;
+  /* border: solid 1px black; */
+}
+
+.contact-width {
+  width: 100%;
+}
+
+#sending-utility {
+  /* border: black solid 1px; */
+  /* align-self: baseline; */
 }
