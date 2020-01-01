@@ -14,7 +14,7 @@ function closeNav() {
   const btn = document.getElementById("contact-open");
   const panel = document.getElementById("remove");
   const content = document.getElementById("side-content");
-  if (screen.width < screen.height) {
+  if (screen.width > screen.height) {
     btn.innerHTML = "";
   } else {
     panel.innerHTML = "";
