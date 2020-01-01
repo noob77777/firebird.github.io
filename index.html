@@ -112,12 +112,24 @@
       </div>
     </div>
 
+    <div id="mySidenav" class="sidenav">
+      <button type="button" class="close closebtn" onclick="closeNav()">
+        &times;
+      </button>
+      <div class="container-fluid">
+        <div class="row" id="side-content"></div>
+      </div>
+    </div>
+
     <div id="interface">
       <div id="sendrec">
         <div class="container-fluid">
           <div class="row">
             <div class="col-6">
-              <h4>Sender : <span id="sender"></span></h4>
+              <h4>
+                <span onclick="openNav()" id="contact-open">☰ </span>
+                <span id="sender"></span>
+              </h4>
             </div>
             <div class="col-6">
               <h4>Receiver : <span id="receiver"></span></h4>
@@ -128,14 +140,16 @@
 
       <div class="container-fluid">
         <div class="row vh-75">
-          <div id="contact-panel" class="col-4">
-            <h2>Contacts</h2>
+          <div id="remove" class="col-4">
+            <div id="contact-panel">
+              <h2>Contacts</h2>
 
-            Receivers ID:
-            <br />
-            <input type="text" class="form-control" id="newid" />
-            <button id="newuser" class="btn-info btn">Create New</button>
-            <ul id="contacts"></ul>
+              Receivers ID:
+              <br />
+              <input type="text" class="form-control" id="newid" />
+              <button id="newuser" class="btn-info btn">Create New</button>
+              <ul id="contacts"></ul>
+            </div>
           </div>
 
           <div id="inbox" class="col-8 bg-light">
@@ -146,7 +160,7 @@
             <div id="sending-utility">
               Message <br />
               <div class="row">
-                <div class="col-8">
+                <div id="live-mssg-div" class="col-10">
                   <input type="text" class="form-control" id="live-mssg" />
                 </div>
                 <div>
