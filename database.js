@@ -1,4 +1,4 @@
-UserId = "";
+UserId = "undefined";
 receiver = "undefined";
 
 //
@@ -23,6 +23,11 @@ const dbRef = firebase
 //
 //
 //
+
+function time() {
+  var d = new Date();
+  return d.getTime();
+}
 
 function hash(str) {
   var res = 0,
@@ -80,12 +85,14 @@ function live_inbox_feed(snap) {
       receiver == "undefined"
     ) {
       counter++;
-      if (counter == 8) {
+      if (counter == 9) {
         idx = i;
         break;
       }
     }
   }
+
+  var last_time = 0;
 
   for (i = idx; i < list.length; i++) {
     var li = document.createElement("li");
@@ -105,8 +112,30 @@ function live_inbox_feed(snap) {
 
       li.innerHTML = formatted(list[i], flag); //JSON.stringify(list[i]);
       ul.appendChild(li);
+      if ("time" in list[i]) {
+        last_time = Math.max(last_time, list[i].time);
+      }
     }
   }
+
+  if (receiver == "undefined") {
+    return;
+  }
+
+  function local_reader(snap) {
+    var last_activity = snap.val();
+    const node = document.getElementById("read-receipt");
+    if (last_activity >= last_time) {
+      node.innerHTML = "seen";
+    } else {
+      node.innerHTML = "";
+    }
+  }
+
+  dbRef
+    .child(receiver)
+    .child(UserId)
+    .on("value", local_reader);
 }
 
 function selectChat() {
@@ -176,8 +205,7 @@ function update_contacts(list) {
       //
       if (flag) {
         const node = document.getElementById("loginmenu");
-        node.innerHTML =
-          "<h1 id='header' class='text-info'>Welcome to FireBird.</h1>";
+        node.innerHTML = "<h1 id='header' class='text-info'>FireBird.</h1>";
         SendTag.innerHTML = UserId;
         RTag.innerHTML = receiver;
 
@@ -352,10 +380,6 @@ function update_contacts(list) {
   const SEND = document.getElementById("send-mssg");
   function sendMessage() {
     const text = document.getElementById("live-mssg").value;
-    dbRef
-      .child(UserId)
-      .child(receiver)
-      .set(text);
 
     function local_reader(snap) {
       // console.log(snap.val());
@@ -365,7 +389,12 @@ function update_contacts(list) {
       function update_inbox(snap) {
         list = snap.val();
         // console.log(list);
-        list.push({ sender: UserId, message: text, receiver: receiver });
+        list.push({
+          sender: UserId,
+          message: text,
+          receiver: receiver,
+          time: time()
+        });
         // console.log(list);
 
         dbRef
@@ -377,7 +406,12 @@ function update_contacts(list) {
       function update_inbox_self(snap) {
         list = snap.val();
         // console.log(list);
-        list.push({ sender: UserId, message: text, receiver: receiver });
+        list.push({
+          sender: UserId,
+          message: text,
+          receiver: receiver,
+          time: time()
+        });
         // console.log(list);
 
         dbRef
@@ -405,5 +439,47 @@ function update_contacts(list) {
   }
   try {
     SEND.onclick = sendMessage;
+  } catch {}
+
+  //
+  //TIMING
+  //
+  const body = document.getElementById("body");
+  function timeUpdate() {
+    if (UserId == "undefined") {
+      return;
+    }
+    if (receiver == "undefined") {
+      dbRef
+        .child(UserId)
+        .child("last_seen")
+        .set(time());
+      return;
+    }
+    dbRef
+      .child(UserId)
+      .child("last_seen")
+      .set(time());
+    dbRef
+      .child(UserId)
+      .child(receiver)
+      .set(time());
+
+    function local_reader2(snap) {
+      const last_seen = snap.val();
+      const node = document.getElementById("online-tag");
+      if (time() - last_seen <= 10000) {
+        node.innerHTML = "(Active)";
+      } else {
+        node.innerHTML = "";
+      }
+    }
+    dbRef
+      .child(receiver)
+      .child("last_seen")
+      .on("value", local_reader2);
+  }
+  try {
+    body.onclick = timeUpdate;
   } catch {}
 })();

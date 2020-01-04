@@ -42,7 +42,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body>
+  <body id="body">
     <div id="loginmenu">
       <div class="container">
         <div class="row">
@@ -125,14 +125,19 @@
       <div id="sendrec">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-6">
+            <div class="col-4 bg-info text-light border2">
               <h4>
-                <span onclick="openNav()" id="contact-open">☰ </span>
+                <span onclick="openNav()" id="contact-open" class="text-light"
+                  >☰
+                </span>
                 <span id="sender"></span>
               </h4>
             </div>
-            <div class="col-6">
-              <h4>Receiver : <span id="receiver"></span></h4>
+            <div class="col-8">
+              <h4>
+                Receiver : <span id="receiver"></span>
+                <small id="online-tag" class="text-success"></small>
+              </h4>
             </div>
           </div>
         </div>
@@ -157,6 +162,9 @@
             <br />
             <ul id="live-inbox"></ul>
 
+            <p class="text-muted" id="left">
+              <small id="read-receipt"></small>
+            </p>
             <div id="sending-utility">
               Message <br />
               <div class="row">
