@@ -1,5 +1,6 @@
 UserId = "undefined";
 receiver = "undefined";
+LOGIN = false;
 
 //
 // FIREBASE INIT
@@ -235,7 +236,7 @@ function update_contacts(list) {
           const node3 = document.getElementById("sending-utility");
           node3.style.visibility = "hidden";
         }
-
+        LOGIN = true;
         dbRef.child(UserId).once("value", local_reader);
         dbRef
           .child(UserId)
@@ -345,29 +346,42 @@ function update_contacts(list) {
   const newIdBtn = document.getElementById("newuser");
   const inputNewUser = document.getElementById("newid");
   function createNewChat() {
-    var li = document.createElement("li");
-    var temp = document.createElement("button");
-
-    temp.classList.add("btn", "btn-outline-info", "contact-width");
-
-    temp.onclick = selectChat;
-    temp.innerHTML = inputNewUser.value;
-    li.appendChild(temp);
-    var ul = document.getElementById("contacts");
-    ul.appendChild(li);
+    const key = inputNewUser.value;
 
     function local_reader(snap) {
-      list = snap.val();
-      list.push(inputNewUser.value);
-      dbRef
-        .child(UserId)
-        .child("contacts")
-        .set(list);
+      if (snap.exists()) {
+        var li = document.createElement("li");
+        var temp = document.createElement("button");
+
+        temp.classList.add("btn", "btn-outline-info", "contact-width");
+
+        temp.onclick = selectChat;
+        temp.innerHTML = inputNewUser.value;
+        li.appendChild(temp);
+        var ul = document.getElementById("contacts");
+        ul.appendChild(li);
+
+        function local_reader(snap) {
+          list = snap.val();
+          list.push(inputNewUser.value);
+          dbRef
+            .child(UserId)
+            .child("contacts")
+            .set(list);
+        }
+        dbRef
+          .child(UserId)
+          .child("contacts")
+          .once("value", local_reader);
+      } else {
+        // console.log("NO");
+        $(document).ready(function() {
+          $("#myErrorModal").modal();
+        });
+      }
     }
-    dbRef
-      .child(UserId)
-      .child("contacts")
-      .once("value", local_reader);
+
+    dbRef.child(key).once("value", local_reader);
   }
   try {
     newIdBtn.onclick = createNewChat;
@@ -446,7 +460,7 @@ function update_contacts(list) {
   //
   const body = document.getElementById("body");
   function timeUpdate() {
-    if (UserId == "undefined") {
+    if (UserId == "undefined" || LOGIN == false) {
       return;
     }
     if (receiver == "undefined") {
