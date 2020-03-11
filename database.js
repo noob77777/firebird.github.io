@@ -129,9 +129,9 @@ function live_inbox_feed(snap) {
     var last_activity = snap.val();
     const node = document.getElementById("read-receipt");
     if (last_activity >= last_time) {
-      node.innerHTML = "seen";
+      node.textContent = "✓✓ - seen";
     } else {
-      node.innerHTML = "";
+      node.textContent = "✓ - sent";
     }
   }
 
@@ -404,6 +404,7 @@ function update_contacts(list) {
   try {
     newIdBtn.onclick = createNewChat;
   } catch {}
+
   //
   //
   // THE SEND BUTTON
