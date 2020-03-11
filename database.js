@@ -22,9 +22,8 @@ const dbRef = firebase
   .child("Root");
 
 //
+// Helper Funtions
 //
-//
-
 function time() {
   var d = new Date();
   return d.getTime();
@@ -42,8 +41,6 @@ function hash(str) {
   }
   return res;
 }
-
-// console.log(hash("pass"));
 
 function clean(list) {
   var set = new Set();
@@ -72,10 +69,15 @@ function formatted(obj, flag) {
   return `<h6 id=${type}>${obj.message} <span class="text-secondary css-sm">~${obj.sender}</span></h6>`;
 }
 
+//LIVE-INBOX-FEED
 function live_inbox_feed(snap) {
   list = snap.val();
   const ul = document.getElementById("live-inbox");
   ul.innerHTML = "";
+
+  if (receiver == "undefined") {
+    return;
+  }
 
   var counter = 0;
   var idx = 1;
@@ -157,6 +159,15 @@ function selectChat() {
 function update_contacts(list) {
   const node = document.getElementById("contacts");
   list = clean(list);
+
+  if (list.length <= 1) {
+    var emptyContactText = document.createElement("p");
+    emptyContactText.classList.add("text-muted");
+    emptyContactText.setAttribute("id", "emptyContactText");
+    emptyContactText.innerHTML = "Looks like you do not have any contacts.";
+    node.appendChild(emptyContactText);
+    return;
+  }
 
   node.innerHTML = "";
   for (i = 1; i < list.length; i++) {
@@ -350,6 +361,13 @@ function update_contacts(list) {
 
     function local_reader(snap) {
       if (snap.exists()) {
+        var removeEmptyContactText = document.getElementById(
+          "emptyContactText"
+        );
+        if (removeEmptyContactText != null) {
+          removeEmptyContactText.parentNode.removeChild(removeEmptyContactText);
+        }
+
         var li = document.createElement("li");
         var temp = document.createElement("button");
 
