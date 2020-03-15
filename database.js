@@ -79,6 +79,8 @@ function live_inbox_feed(snap) {
     return;
   }
 
+  const MESSAGE_DISPLAY_COUNT = 12;
+
   var counter = 0;
   var idx = 1;
   for (i = list.length - 1; i > 0; i--) {
@@ -88,7 +90,7 @@ function live_inbox_feed(snap) {
       receiver == "undefined"
     ) {
       counter++;
-      if (counter == 9) {
+      if (counter == MESSAGE_DISPLAY_COUNT) {
         idx = i;
         break;
       }
