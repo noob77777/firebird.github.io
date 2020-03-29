@@ -64,7 +64,7 @@ function formatted(obj, flag) {
     type = "left";
   }
   if (flag) {
-    return `<h6 id=${type}>${obj.message} <span class="text-danger css-sm">~${obj.sender}</span></h6>`;
+    return `<h6 id=${type}>${obj.message} <span class="text-muted css-sm">~${obj.sender}</span></h6>`;
   }
   return `<h6 id=${type}>${obj.message} <span class="text-secondary css-sm">~${obj.sender}</span></h6>`;
 }
@@ -76,10 +76,13 @@ function live_inbox_feed(snap) {
   ul.innerHTML = "";
 
   if (receiver == "undefined") {
+    var li = document.createElement("li");
+    li.innerHTML = `<h6 id=center><span class="text-muted">No contact selected.</span></h6>`;
+    ul.appendChild(li);
     return;
   }
 
-  const MESSAGE_DISPLAY_COUNT = 12;
+  const MESSAGE_DISPLAY_COUNT = 100;
 
   var counter = 0;
   var idx = 1;
@@ -136,6 +139,9 @@ function live_inbox_feed(snap) {
       node.textContent = "✓ - sent";
     }
   }
+
+  const inbox = document.getElementById("inbox-2");
+  inbox.scrollTop = inbox.scrollHeight - inbox.clientHeight;
 
   dbRef
     .child(receiver)

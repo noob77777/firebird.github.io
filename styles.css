@@ -5,6 +5,7 @@
 }
 #inbox {
   border-radius: 15px;
+  height: 75vh;
 }
 #interface {
   visibility: hidden;
@@ -25,6 +26,15 @@
   color: lightseagreen;
   padding-left: 5vw;
 }
+
+#center {
+  width: 100%;
+  padding: 2%;
+  /* border: 1px solid black; */
+  text-align: center;
+  /* height: 100%; */
+}
+
 #live_mssg {
   width: 35vw;
 }
@@ -51,6 +61,7 @@ ul {
 
 #inbox-2 {
   height: 65%;
+  overflow-y: scroll;
 }
 
 #inbox-3 {
@@ -65,6 +76,17 @@ ul {
   height: 70vh;
   /* border: solid 1px black; */
 }
+
+.col-4 .contact-scroll {
+  overflow-y: scroll;
+  height: 40vh;
+}
+
+.col-12 .contact-scroll {
+  overflow-y: scroll;
+  height: 60vh;
+}
+
 .contact-width {
   width: 100%;
 }
@@ -107,4 +129,25 @@ ul {
   top: 25px;
   right: 25px;
   /* margin-left: 50px; */
+}
+
+/* scrollbars */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
